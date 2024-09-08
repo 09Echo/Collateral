@@ -22,8 +22,8 @@ from monai.transforms import (
     Compose,
 )
 import cv2
-dataset_path = '/home/hubin/Collateral/Datasets/MIP_25p_Rotate_Crop_Pad'
-data_info_path = "/home/hubin/Collateral/ProveIt_Select_Sheet0505_select.xlsx"
+dataset_path = '/home/Collateral/Datasets/MIP_25p_Rotate_Crop_Pad'
+data_info_path = "/home/Collateral/ProveIt_Select_Sheet0505_select.xlsx"
 
 
 class ProVe():

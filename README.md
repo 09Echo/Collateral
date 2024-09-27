@@ -39,16 +39,15 @@ pip install -r requirements.txt
 ```
 
 ## Collateral Scoring on CT Angiography
-* Skull-stripping
+### Skull-stripping
   
 After converting the DICOM files to NIfTI format, perform skull stripping according to the instructions at https://github.com/WuChanada/StripSkullCT.  <br />
 
-* Training  
+### Training  
 
-* Testing  
+### Testing  
 
-* Reproduction details and codes
-
+### Reproduction details and codes
 During reproduction, for the CNN-based methods, Transformer-based methods, and Hybrid-CNN-Transformer-based methods. All of these methods can be found at [[DOC]](./baseline).  <br />
 Note that for all compared methods, to perform fair comparisons, we used the same data split and five-fold cross-validation.  <br />
 

@@ -24,6 +24,7 @@ def parse_args():
     parser.add_argument("--k_fold", type=int, default=5)
     parser.add_argument("--save_path", type=str, default='./results/method', help = 'model_save_path')
     parser.add_argument('--weights', default=[1, 2.65, 4.417], help='cross entropyloss')
+    parser.add_argument('num_classes', type=int, default=3)
     args = parser.parse_args()
     return args
 
@@ -42,7 +43,7 @@ def main(args):
     set_seed(RANDOM_SEED)
 
     for ki in range(args.k_fold):
-        model = mpvit_small().cuda()
+        model = mpvit_small(num_classes=args.num_classes).cuda()
 
         optimizer = torch.optim.Adam(model.parameters(), lr = args.lr)
         lr_scheduler = CosineAnnealingLR(optimizer, T_max=args.epochs, verbose=False)

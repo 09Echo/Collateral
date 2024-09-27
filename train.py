@@ -51,8 +51,8 @@ def main(args):
 
         train_ds = ProVe(flag=0, fold=ki, mode='train', n_split=args.k_fold)
         test_ds = ProVe(flag=0, fold=ki, mode='test', n_split=args.k_fold)
-        train_dl = DataLoader(train_ds, batch_size=args.b_size, num_workers=8, drop_last=False, shuffle=False)
-        test_dl = DataLoader(test_ds, batch_size=args.t_size, num_workers=10, drop_last=False, shuffle=False)
+        train_dl = DataLoader(train_ds, batch_size=args.b_size, num_workers=4, drop_last=False, shuffle=False)
+        test_dl = DataLoader(test_ds, batch_size=args.t_size, num_workers=4, drop_last=False, shuffle=False)
 
         # batch数量
         train_num = len(train_dl)

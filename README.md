@@ -57,14 +57,5 @@ Parameter Description：
 During reproduction, for the CNN-based methods, Transformer-based methods, and Hybrid-CNN-Transformer-based methods. All of these methods can be found at [[DOC]](./baseline).  <br />
 Note that for all compared methods, to perform fair comparisons, we used the same data split and five-fold cross-validation.  <br />
 
-### 1.5 Training
-conda activate <YOUR ENV NAME>
-Simply run the following in your command line:
-* Run `CUDA_VISIBLE_DEVICES=0 nnUNetv2_train -dataset_name_or_id TASK_ID -model_name AIS_SAM -ex_name Ex1@b_2_p_20_256_256_s_3.0_0.4375_0.4375` for training.  <br />
-
-
-### 1.6 Testing 
-* Run `CUDA_VISIBLE_DEVICES=0 nnUNetv2_train -dataset_name_or_id TASK_ID -model_name AIS_SAM -ex_name Ex1@b_2_p_20_256_256_s_3.0_0.4375_0.4375 --val` for testing.  <br />
-
 
 

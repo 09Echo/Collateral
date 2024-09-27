@@ -18,7 +18,13 @@ numpy 2.1.1 <br />
 ## Getting Started
 
 ### Installation
-#### Step1: Clone the method repository
+#### Step1: Clone the Collateral repository
+To get started, first clone the Collateral repository and navigate to the project directory:
+cd Collateral
+'''
+git clone https://github.com/09Echo/Collateral.git
+'''
+
 * Install our modified nnUNet as below
   
 ```

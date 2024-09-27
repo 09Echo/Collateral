@@ -21,22 +21,22 @@ numpy 2.1.1 <br />
 #### Step1: Clone the Collateral repository
 To get started, first clone the Collateral repository and navigate to the project directory:
 
-'''
+```
 git clone https://github.com/09Echo/Collateral.git
 cd Collateral
-'''
+```
 
 #### Step2: Environment Setup
 Create and activate a new conda environment
-'''
+```
 conda create -n collateral python=3.9.19
 conda activate collateral
-'''
+```
 
 Install Dependencies
-'''
+```
 pip install -r requirements.txt
-'''
+```
 
 ## Collateral Scoring on CT Angiography
 *Skull-stripping

@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument("--t_size", type=int, default=10, help="train batch size")
     parser.add_argument("--device", type=str, default='cuda')
     parser.add_argument("--k_fold", type=int, default=5)
-    parser.add_argument("--save_path", type=str, default='./results/method', help = 'model_save_path')
+    parser.add_argument("--save_path", type=str, default='./results', help = 'model_save_path')
     parser.add_argument('--weights', default=[1, 2.65, 4.417], help='cross entropyloss')
     parser.add_argument('num_classes', type=int, default=3)
     args = parser.parse_args()

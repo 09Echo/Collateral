@@ -52,6 +52,13 @@ Parameter Description：
 * --num-classes <Classes>: Classification category, please specify a positive integer, such as 3
 
 ### Testing  
+```
+python test.py --checkpoint-path <Path> --checkpoint-name <list> --num-classes <Classes> --k-fold <fold>
+```
+Parameter Description：  
+* --checkpoint-path <Path>: Directory for saving model checkpoints
+* --checkpoint-name <list>: Name of each folded test model, such as 5-fold cross-validation: ['fold0.pt', 'fold1.pt', 'fold2.pt', 'fold3.pt', 'fold4.pt']
+* --num-classes <Classes>: Classification category, please specify a positive integer, such as 3
 
 ### Reproduction details and codes
 During reproduction, for the CNN-based methods, Transformer-based methods, and Hybrid-CNN-Transformer-based methods. All of these methods can be found at [[Baseline]](./baseline).  <br />

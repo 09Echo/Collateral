@@ -83,7 +83,6 @@ class ProVe():
         arr = sitk.GetArrayFromImage(itk).astype(float)
         arr = cv2.resize(arr.squeeze(), (512, 512), interpolation=cv2.INTER_AREA)
         arr = arr[None]
-        #arr = np.concatenate((arr, arr, arr), axis=0)
         arr = self.transform(arr)
         label = img_info['label'][item]
         if self.mode == 'test':

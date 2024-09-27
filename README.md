@@ -15,9 +15,10 @@ opencv_python 4.10.0.84 <br />
 pandas 2.2.3 <br />
 numpy 2.1.1 <br />
 
-## Usage
+## Getting Started
 
-### 0. Installation
+### Installation
+#### Step1: Clone the method repository
 * Install our modified nnUNet as below
   
 ```

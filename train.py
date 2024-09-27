@@ -11,22 +11,18 @@ from sklearn import metrics
 
 from data_loader import ProVe
 warnings.filterwarnings('ignore')
-#from propose_fdiff_c_fir_prm import mpvit_small
-#from repVit import repvit_m3
-from unireplknet import unireplknet_t
-#from MambaVision.mambavision.models.mamba_vision import mamba_vision_T
-#from replknet import create_RepLKNet31B
+from method import mpvit_small
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--lr",default=1e-3, help="learning rate")
+    parser.add_argument("--lr",default=3e-4, help="learning rate")
     parser.add_argument("--epochs", type=int, default=150)
     parser.add_argument("--b_size", type=int, default=8, help="train batch size")
     parser.add_argument("--t_size", type=int, default=10, help="train batch size")
     parser.add_argument("--device", type=str, default='cuda')
-    parser.add_argument("--k_fold", type=int, default=3)
-    parser.add_argument("--save_path", type=str, default='./results/unireplknet', help = 'model_save_path')
+    parser.add_argument("--k_fold", type=int, default=5)
+    parser.add_argument("--save_path", type=str, default='./results/method', help = 'model_save_path')
     parser.add_argument('--weights', default=[1, 2.65, 4.417], help='cross entropyloss')
     args = parser.parse_args()
     return args
@@ -46,11 +42,7 @@ def main(args):
     set_seed(RANDOM_SEED)
 
     for ki in range(args.k_fold):
-        #model = repvit_m3(num_classes=3).to(args.device)
-        model = unireplknet_t(num_classes=3).to(args.device)
-        #model = mamba_vision_T(prtrained=True, model_path='/home/hubin/Collateral/scodeeeee/MambaVision-T-1K').cuda()
-        #model = mamba_vision_T(prtrained=False).to(args.device)
-        #model = create_RepLKNet31B(small_kernel_merged=False, num_classes=3).to(args.device)
+        model = mpvit_small().cuda()
 
         optimizer = torch.optim.Adam(model.parameters(), lr = args.lr)
         lr_scheduler = CosineAnnealingLR(optimizer, T_max=args.epochs, verbose=False)

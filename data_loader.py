@@ -5,7 +5,6 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import RandomOverSampler
-from imblearn.under_sampling import RandomUnderSampler
 from monai.transforms import (
     OneOf,
     LoadImage,
@@ -54,25 +53,19 @@ class ProVe():
         if flag == 1:
             label = np.where(label > 1, 1, 0)
         skf = StratifiedKFold(self.n_split, shuffle=True, random_state=42)
-        #ros = RandomOverSampler(random_state=42, sampling_strategy='auto')
+        ros = RandomOverSampler(random_state=42, sampling_strategy='auto')
         for train_index, test_index in skf.split(data, label):
             X_train, X_test = data[train_index], data[test_index]
             y_train, y_test = label[train_index], label[test_index]
             z_id = id[test_index]
             self.split.append({'train': {'path': X_train, 'label': y_train},
                                'test': {'path': X_test, 'label': y_test, 'id': z_id}})
-        # for split in self.split:
-        #     X, y = ros.fit_resample(split['train']['path'], split['train']['label'])
-        #     split['train']['path'], split['train']['label'] = X, y
+        for split in self.split:
+            X, y = ros.fit_resample(split['train']['path'], split['train']['label'])
+            split['train']['path'], split['train']['label'] = X, y
         print()
-        if mode == 'train':
-            self.transform = Compose([
-                # Transpose(indices=(2, 0, 1)),
-                NormalizeIntensity(),
-            ])
-        else:
-            self.transform = Compose([
-                # Transpose(indices=(2, 0, 1)),
+
+        self.transform = Compose([
                 NormalizeIntensity(),
             ])
 

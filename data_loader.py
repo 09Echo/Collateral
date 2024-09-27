@@ -22,16 +22,16 @@ from monai.transforms import (
     Compose,
 )
 import cv2
-dataset_path = '/home/Collateral/Datasets/MIP_25p_Rotate_Crop_Pad'
-data_info_path = "/home/Collateral/ProveIt_Select_Sheet0505_select.xlsx"
-
+dataset_path = './dataset'
+data_info_path = "./information.xlsx"
 
 class ProVe():
-    def __init__(self, fold=0, mode='train', flag=0):
+    def __init__(self, fold=0, mode='train', flag=0,n_split=3):
         modalities = ['mCTA1_brain_mca_max.nii.gz']
         self.mode = mode
         self.fold = fold
         self.split = []
+        self.n_split = n_split
         df = pd.read_excel(data_info_path)[['Prove-it ID', 'Collaterals (1:Good, 2:inter, 3:poor)']]
         df.columns = ['id', 'label']
         data_list = []
@@ -53,19 +53,17 @@ class ProVe():
         id = np.array(id_list)
         if flag == 1:
             label = np.where(label > 1, 1, 0)
-        skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=99)
-        ros = RandomOverSampler(random_state=42, sampling_strategy='auto')
+        skf = StratifiedKFold(self.n_split, shuffle=True, random_state=42)
+        #ros = RandomOverSampler(random_state=42, sampling_strategy='auto')
         for train_index, test_index in skf.split(data, label):
             X_train, X_test = data[train_index], data[test_index]
             y_train, y_test = label[train_index], label[test_index]
             z_id = id[test_index]
             self.split.append({'train': {'path': X_train, 'label': y_train},
                                'test': {'path': X_test, 'label': y_test, 'id': z_id}})
-        for split in self.split:
-            # X, y = rus.fit_resample(split['train']['path'], split['train']['label'])
-            # split['train']['path'], split['train']['label'] = X, y
-            X, y = ros.fit_resample(split['train']['path'], split['train']['label'])
-            split['train']['path'], split['train']['label'] = X, y
+        # for split in self.split:
+        #     X, y = ros.fit_resample(split['train']['path'], split['train']['label'])
+        #     split['train']['path'], split['train']['label'] = X, y
         print()
         if mode == 'train':
             self.transform = Compose([
@@ -85,6 +83,7 @@ class ProVe():
         arr = sitk.GetArrayFromImage(itk).astype(float)
         arr = cv2.resize(arr.squeeze(), (512, 512), interpolation=cv2.INTER_AREA)
         arr = arr[None]
+        #arr = np.concatenate((arr, arr, arr), axis=0)
         arr = self.transform(arr)
         label = img_info['label'][item]
         if self.mode == 'test':
@@ -92,7 +91,6 @@ class ProVe():
             return arr.astype(float), label, id
         else:
             return arr.astype(float), label
-        # return arr.astype(float), label
 
     def __len__(self):
         return len(self.split[self.fold][self.mode]['path'])

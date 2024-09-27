@@ -1,17 +1,19 @@
-# AISCT-SAM
-The data and code for the paper "AISCT-SAM: A Clinical Knowledge-Driven Fine-Tuning Strategy for Applying Foundation Model to Fully Automatic Acute Ischemic Stroke Lesion Segmentation on Non-Contrast CT Scans" submitted to IEEE ICASSP 2025. <br />
-<!--AISCT-SAM: Customized SAM-Med2D with 3D Context Awareness and Self-Prompt Generation for Fully Automatic Acute Ischemic Stroke Lesion Segmentation on NonContrast CT Scans" submitted to IEEE TMI-->
-
-
+# Collateral Scoring
+The data and code for the paper "A Dual-Branch Hybrid Network with Bilateral-Difference Awareness for Collateral Scoring on CT Angiography of Acute Ischemic Stroke Patients" submitted to Computer Methods and Programs in Biomedicine 2024. <br />
 
 ## Requirements
 CUDA 11.7<br />
-Python 3.10.13<br /> 
-Pytorch 2.0.0<br />
-Torchvision 0.15.0<br />
-batchgenerators 0.25<br />
-SimpleITK 2.3.0 <br />
-scipy 1.11.3 <br />
+Python 3.9.19<br /> 
+Pytorch 2.2.1<br />
+Torchvision 0.17.1<br />
+SimpleITK 2.4.0 <br />
+einops 0.8.0 <br />
+matplotlib 3.9.2 <br />
+timm 1.0.9 <br />
+scikit_learn 1.5.2 <br />
+opencv_python 4.10.0.84 <br />
+pandas 2.2.3 <br />
+numpy 2.1.1 <br />
 
 ## Usage
 

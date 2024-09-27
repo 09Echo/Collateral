@@ -45,8 +45,12 @@ After converting the DICOM files to NIfTI format, perform skull stripping accord
 
 ### Training  
 ```
-python train.py
+python train.py --save-path <Path> --num-classes <Classes>
 ```
+Parameter Description：  
+* --save-path <Path>: Model save path, please specify a valid directory
+* --num-classes <Classes>: Classification category, please specify a positive integer, such as 3
+
 ### Testing  
 
 ### Reproduction details and codes

@@ -44,7 +44,9 @@ pip install -r requirements.txt
 After converting the DICOM files to NIfTI format, perform skull stripping according to the instructions at https://github.com/WuChanada/StripSkullCT.  <br />
 
 ### Training  
-
+```
+python train.py
+```
 ### Testing  
 
 ### Reproduction details and codes

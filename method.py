@@ -798,6 +798,7 @@ class MPViT(nn.Module):
             nn.Conv2d(embed_dims[0] * 2, embed_dims[0], 1, 1),
             nn.BatchNorm2d(embed_dims[0])
         )
+        # self.prm = PRM(kernel_size=3, downsample_ratio=1, in_chans=embed_dims[-1], embed_dim=embed_dims[-1])
         self.apply(self._init_weights)
         self.origin_conv1 = nn.Sequential(
             nn.Conv2d(embed_dims[0], embed_dims[0], 1, 1, 0),
@@ -816,6 +817,8 @@ class MPViT(nn.Module):
             nn.BatchNorm2d(embed_dims[0]),
             nn.Sigmoid()
         )
+
+        # self.fusion = nn.Conv2d(2, 1, 1, 1, 0)
 
     def _init_weights(self, m):
         """initialization"""
@@ -844,10 +847,26 @@ class MPViT(nn.Module):
         d = d + d * self.fusion(f)
         x_new = torch.cat([d, x], dim=1)
         x_new = self.conv(x_new)
+        # x = self.prm(x)
         guide = x_new
         for idx in range(self.num_stages):
+            # if idx == 1:
+            #     x_flip = self.flip(guide, -1)
+            #     d = guide - x_flip
+            #     x1 = self.origin_conv1(guide)
+            #     d1 = self.flip_conv1(d)
+            #     f = torch.cat([x1, d1], dim=1)
+            #     d = d + d * self.fusion(f)
+            #     x_new = torch.cat([d, guide], dim=1)
+            #     guide = self.conv(x_new)
             guide = self.prms[idx](guide)
             guide = self.mhca_stages[idx](guide)
+
+        # x = torch.cat([attn, conv, guide], dim=1)
+        # x = self.conv(x)
+        # x_new_g = self.gl(x_new)
+        # x_new = x_new + x_new * x_new_g
+
         return guide
 
     def flip(self, x, dim):
@@ -884,6 +903,17 @@ def _cfg_mpvit(url="", **kwargs):
 
 
 def mpvit_small(**kwargs):
+    """mpvit_small :
+
+    - #paths : [2, 3, 3, 3]
+    - #layers : [1, 3, 6, 3]
+    - #channels : [64, 128, 216, 288]
+    - MLP_ratio : 4
+    Number of params : 22892400
+    FLOPs : 4799650824
+    Activations : 30601880
+    """
+
     model = MPViT(
         in_chans=1,
         img_size=512,
@@ -905,7 +935,6 @@ if __name__ == "__main__":
 
     model = mpvit_small()
     input = torch.randn(1, 1, 512, 512)
-
     start_time = time.time()
     with torch.no_grad():
         output = model(input)

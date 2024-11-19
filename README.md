@@ -1,5 +1,5 @@
 # Collateral Scoring
-The data and code for the paper "A Dual-Branch Hybrid Network with Bilateral-Difference Awareness for Collateral Scoring on CT Angiography of Acute Ischemic Stroke Patients" submitted to Computer Methods and Programs in Biomedicine 2024. <br />
+The data and code for the paper "A Dual-Branch Hybrid Network with Bilateral-Difference Awareness for Collateral Scoring on CT Angiography of Acute Ischemic Stroke Patients" submitted to Physics in Medicine & Biology 2024. <br />
 
 ## Requirements
 CUDA 11.7<br />

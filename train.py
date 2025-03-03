@@ -16,14 +16,14 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--lr",default=3e-4, help="learning rate")
+    parser.add_argument("--lr",default=3e-3, help="learning rate")
     parser.add_argument("--epochs", type=int, default=150)
     parser.add_argument("--b_size", type=int, default=8, help="train batch size")
-    parser.add_argument("--t_size", type=int, default=10, help="train batch size")
+    parser.add_argument("--t_size", type=int, default=1, help="train batch size")
     parser.add_argument("--device", type=str, default='cuda')
     parser.add_argument("--k_fold", type=int, default=5)
     parser.add_argument("--save_path", type=str, default='./results', help = 'model_save_path')
-    parser.add_argument('--weights', default=[1, 2.65, 4.417], help='cross entropyloss')
+    parser.add_argument('--weights', default=[0.74, 1.126, 1.288], help='cross entropyloss')
     parser.add_argument('--num_classes', type=int, default=3)
     args = parser.parse_args()
     return args
@@ -45,8 +45,13 @@ def main(args):
     for ki in range(args.k_fold):
         model = mpvit_small(num_classes=args.num_classes).cuda()
 
-        optimizer = torch.optim.Adam(model.parameters(), lr = args.lr)
-        lr_scheduler = CosineAnnealingLR(optimizer, T_max=args.epochs, verbose=False)
+        optimizer = torch.optim.SGD(model.parameters(),
+                              lr=args.lr,
+                              momentum=0.9,
+                              weight_decay=0,
+                              nesterov=True,
+                              )
+        lr_scheduler = CosineAnnealingLR(optimizer, args.epochs, 1e-5, verbose=False)
         loss_fn = nn.CrossEntropyLoss(weight= torch.FloatTensor(args.weights).cuda()).to(args.device)
 
         train_ds = ProVe(flag=0, fold=ki, mode='train', n_split=args.k_fold)
